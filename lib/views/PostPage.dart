@@ -34,20 +34,48 @@ class _PostPageState extends State<PostPage> {
             stream: _postBloc.postListFlux,
             builder:
                 (BuildContext context, AsyncSnapshot<List<Post>> snapshot) {
-              if(snapshot.hasData){
+              if (snapshot.hasData) {
                 return ListView.builder(
                   itemBuilder: (BuildContext context, int index) {
                     Post post = snapshot.data[index];
-                    return Container(
-                      width: 200,
-                      height: 200,
-                      child: Center(
-                        child: Text(post.title),
-                      ),
+                    return Card(
+                      color: Colors.blueGrey,
+                      child: Container(
+                          margin: EdgeInsets.all(10),
+                          width: 200,
+                          height: 200,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              Padding(
+                                padding:
+                                    const EdgeInsets.only(top: 8, bottom: 10),
+                                child: Text(
+                                  "${post.id}",
+                                  style: TextStyle(color: Colors.white),
+                                ),
+                              ),
+                              Padding(
+                                padding:
+                                    const EdgeInsets.only(top: 8, bottom: 10),
+                                child: Text(
+                                  "postTitle: ${post.title}",
+                                  style: TextStyle(color: Colors.white),
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Text(
+                                  "postBody: ${post.body}",
+                                  style: TextStyle(color: Colors.white),
+                                ),
+                              ),
+                            ],
+                          )),
                     );
                   },
                 );
-              }else{
+              } else {
                 Center(
                   child: CircularProgressIndicator(),
                 );

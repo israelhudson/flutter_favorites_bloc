@@ -1,6 +1,10 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_favorites_bloc/blocs/PostBloc.dart';
+import 'package:flutter_favorites_bloc/components/PostCard.dart';
 import 'package:flutter_favorites_bloc/models/Post.dart';
+
+import 'FavoritesPage.dart';
 
 class PostPage extends StatefulWidget {
   @override
@@ -34,45 +38,12 @@ class _PostPageState extends State<PostPage> {
             stream: _postBloc.postListFlux,
             builder:
                 (BuildContext context, AsyncSnapshot<List<Post>> snapshot) {
-              if (snapshot.hasData) {
+              if (snapshot.hasData && snapshot.data.isNotEmpty) {
                 return ListView.builder(
+                  itemCount: snapshot.data.length,
                   itemBuilder: (BuildContext context, int index) {
                     Post post = snapshot.data[index];
-                    return Card(
-                      color: Colors.blueGrey,
-                      child: Container(
-                          margin: EdgeInsets.all(10),
-                          width: 200,
-                          height: 200,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              Padding(
-                                padding:
-                                    const EdgeInsets.only(top: 8, bottom: 10),
-                                child: Text(
-                                  "${post.id}",
-                                  style: TextStyle(color: Colors.white),
-                                ),
-                              ),
-                              Padding(
-                                padding:
-                                    const EdgeInsets.only(top: 8, bottom: 10),
-                                child: Text(
-                                  "postTitle: ${post.title}",
-                                  style: TextStyle(color: Colors.white),
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Text(
-                                  "postBody: ${post.body}",
-                                  style: TextStyle(color: Colors.white),
-                                ),
-                              ),
-                            ],
-                          )),
-                    );
+                    return PostCard(post);
                   },
                 );
               } else {
@@ -81,6 +52,11 @@ class _PostPageState extends State<PostPage> {
                 );
               }
             }),
+      ),
+      floatingActionButton: FloatingActionButton(
+          child: Icon(Icons.favorite),
+          onPressed: () => Navigator.push(context, CupertinoPageRoute(
+            builder: (context) => FavoritesPage())),
       ),
     );
   }

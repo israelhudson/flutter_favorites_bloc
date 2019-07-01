@@ -69,7 +69,7 @@ class _PostCardState extends State<PostCard> {
                 stream: _favoriteCardBloc.isFavoriteFlux,
                 initialData: false,
                 builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
-                  return snapshot.hasData
+                  return snapshot.data
                       ? IconButton(
                       icon: Icon(
                         Icons.favorite,

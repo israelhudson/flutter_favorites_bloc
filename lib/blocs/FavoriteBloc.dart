@@ -17,8 +17,8 @@ class FavoriteBloc extends BlocBase {
 
   final _favoritesListDeleteController = BehaviorSubject<Post>();
   Observable<Post> get favoritesDeleteFlux =>
-      _favoritesListAddController.stream;
-  Sink<Post> get favoritesDeleteEvent => _favoritesListAddController.sink;
+      _favoritesListDeleteController.stream;
+  Sink<Post> get favoritesDeleteEvent => _favoritesListDeleteController.sink;
 
   FavoriteBloc() {
     favoritesAddFlux.listen(_handleAdd);
